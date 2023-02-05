@@ -8,6 +8,8 @@ from aiogram.dispatcher import filters
 
 from datetime import datetime
 
+import messages
+
 from consts import TOKEN, DB_FILENAME, CRASH_STORAGE_FILENAME, SALT
 
 logger = logging.getLogger(__name__)
@@ -28,7 +30,7 @@ def update_db():
 
 @dp.message_handler(commands=["start"])
 async def command_start_handler(message: Message) -> None:
-    await message.answer(f"Hello, <b>{message.from_user.full_name}!</b>")
+    await message.answer(messages.WelcomeMessage(message.from_user.full_name))
 
 
 def find_for_data(hashed_value: str) -> bool:
@@ -69,10 +71,10 @@ def find_for_pair_and_write_new_pair(aliasA: str, aliasB: str) -> bool:
 
 
 async def send_error(message: Message) -> None:
-    await message.answer('Wrong alias format or you tried to match with yourself')
+    await message.answer(messages.AliasError)
 
 async def send_error_timeout(message: Message) -> None:
-    await message.answer('Throttle')
+    await message.answer(messages.Throttle)
 
 
 def throttle_check(timestamp: float):
@@ -95,7 +97,7 @@ async def alias_handler(message: Message) -> None:
         if throttle_check(db[str(message.from_user.id)]["timestamp"]):
             await send_error_timeout(message)
             return
-        await message.answer('Firstly remove')
+        await message.answer(message.FirstlyRemove)
         return
 
     if crash_alias == from_user_alias:
@@ -106,17 +108,16 @@ async def alias_handler(message: Message) -> None:
     update_db()
     
     if find_for_pair_and_write_new_pair(from_user_alias, crash_alias):
-        await message.answer('Match')
-
         crash_id = None
         for user in db:
             if db[user]["alias"] == crash_alias:
                 crash_id = user
                 break
 
-        await bot.send_message(text='Match from another person', chat_id=crash_id)
+        await message.answer(messages.Match)
+        await bot.send_message(text=messages.MatchMessageToAnotherPerson, chat_id=crash_id)
     else:
-        await message.answer('Match pending')
+        await message.answer(messages.MatchPending)
 
 
 @dp.message_handler(commands=["unmatch"])
@@ -128,7 +129,7 @@ async def unmatch_handler(message: Message) -> None:
         update_db()
 
     if "timestamp" not in db[str(message.from_user.id)]:
-        await message.answer('No matches found')        
+        await message.answer(messages.NoMatchesDuringRemove)        
         return
     elif throttle_check(db[str(message.from_user.id)]["timestamp"]):
         await send_error_timeout(message)
@@ -159,7 +160,7 @@ async def unmatch_handler(message: Message) -> None:
         await message.answer('Match removed')
         return
 
-    await message.answer('No matches found')
+    await message.answer(messages.MatchRemoved)
 
 @dp.message_handler()
 async def alias_handler(message: Message) -> None:
