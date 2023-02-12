@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  bot:
+    build: .
+    restart: on-failure
+    ports:
+      - "25601:8000"
+    volumes:
+      - .:/bot
+    logging:
+      options:
+        max-size: "50m"
