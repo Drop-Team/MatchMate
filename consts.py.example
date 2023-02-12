@@ -1,0 +1,4 @@
+TOKEN = ""
+DB_FILENAME = "db.json"
+CRASH_STORAGE_FILENAME = "storage"
+SALT = ""

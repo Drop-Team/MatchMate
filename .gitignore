@@ -1,5 +1,5 @@
 consts.py
-crashes.txt
+storage
 db.json
 
 __pycache__

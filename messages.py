@@ -1,4 +1,4 @@
-WelcomeMessage = '''Hello, <b>{full_name}!</b>
+WelcomeMessage = '''Hello, <b>{name}</b>!
 I am MatchMate 🤖 - a bot that helps people to find each other!
 
 Privately submit a Telegram handle of a person, and when they decide to submit yours - you both will be notified about the match ❤️‍🔥
