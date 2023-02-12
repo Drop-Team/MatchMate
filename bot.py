@@ -34,6 +34,7 @@ def update_db():
 
 @dp.message_handler(commands=["start"])
 async def command_start_handler(message: Message) -> None:
+    metrics.start_command.inc()
     await message.answer(messages.WelcomeMessage.format(name=message.from_user.first_name))
 
 

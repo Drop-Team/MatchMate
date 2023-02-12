@@ -7,6 +7,8 @@ users = Gauge('users', 'Users number')
 
 storage_records = Gauge('storage_records', 'Storage records number')
 
+start_command = Counter('start_command', 'Start command')
+
 match_attempt = Counter('match_attempt', 'Match attempt')
 unmatch_attempt = Counter('unmatch_attempt', 'Unmatch attempt')
 
