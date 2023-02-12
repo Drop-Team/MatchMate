@@ -20,9 +20,9 @@ You should wait for at least 24 hours before submitting another alias!
 '''
 FirstlyRemove = '''✏️ You cannot have two matches submitted on the same time!
 
-No, I cannot simply remove your previous alias by myself - because it's encrypted!
+No, I cannot simply remove previous alias by myself - because it's encrypted!
 
-Please, use the /unmatch command and follow its instructions to remove your current match!
+Please, use the /unmatch @alias
 '''
 
 Match = '''OMG, it's a match!!! ❤️‍🔥❤️‍🔥❤️‍🔥
@@ -41,6 +41,8 @@ Try to submit a new one!
 MatchRemoved = ''' 💾 Match successfully removed.
 
 Now you can submit another person's handle'''
+
+MatchNotFound = '''Match not found. You should submit previous alias.'''
 
 NoAlias = '''⁉️ You do not seem to have an alias!
 
