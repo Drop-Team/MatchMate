@@ -127,6 +127,7 @@ async def alias_handler(message: Message) -> None:
     update_db()
 
     if find_for_pair_and_write_new_pair(from_user_alias, crash_alias):
+        metrics.successful_matches.inc()
         crash_id = None
         for user in db:
             if db[user]["alias"] == crash_alias:
