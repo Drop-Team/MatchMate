@@ -192,6 +192,11 @@ async def other_messages_handler(message: Message) -> None:
     await send_error(message)
 
 
+async def on_startup(dispatcher: Dispatcher):
+    bot_info = await bot.get_me()
+    print(f"Logged in as {bot_info.full_name} ({bot_info.mention})")
+
+
 if __name__ == "__main__":
     prometheus_client.start_http_server(8000)
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, on_startup=on_startup, skip_updates=True)
